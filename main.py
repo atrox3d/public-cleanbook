@@ -8,7 +8,7 @@ import util.selenium
 import util.logger
 import logging
 
-from mylib import facebook
+from mylib.facebook import Facebook
 
 
 #
@@ -47,10 +47,11 @@ if __name__ == "__main__":
     # signal.signal(signal.SIGINT, quit_handler)
 
     try:
-        driver.get("https://www.facebook.com/")
-        facebook.dismiss_cookies(driver)
-        facebook.login(driver)
-        facebook.photos(driver)
+        facebook = Facebook(driver)
+        facebook.home()
+        facebook.dismiss_cookies()
+        facebook.login()
+        facebook.photos()
         while True:
             time.sleep(2)
     except KeyboardInterrupt as e:
