@@ -1,50 +1,37 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+import atexit
+import util.system
+import util.selenium
+import util.logger
+
+rootlogger = util.logger.get_cli_logger()
+
 
 CHROME_DRIVER_PATH = "./chromedriver"  # .exe
 driver = webdriver.Chrome(CHROME_DRIVER_PATH)
 
 
-def wikipedia():
-    driver.get("https://en.wikipedia.org/wiki/Main_Page")
-
-    article_count = driver.find_element_by_css_selector("#articlecount a")
-    print(article_count.text)
-    # article_count.click()
-
-    all_portals = driver.find_element_by_link_text("All portals")
-    # all_portals.click()
-
-    search = driver.find_element_by_name("search")
-    search.send_keys("python")
-    search.send_keys(Keys.ENTER)
-
-
-def login():
-    driver.get("http://secure-retreat-92358.herokuapp.com/")
-    driver.find_element_by_name("fName").send_keys("robb")
-    driver.find_element_by_name("lName").send_keys("robbs")
-    driver.find_element_by_name("email").send_keys("robb@mail.mail")
-    # driver.find_element_by_css_selector(".btn-primary").click()
-    driver.find_element_by_css_selector("button[type=submit]").click()
-
-
-def old():
-    try:
-        wikipedia()
-        login()
-    except Exception as e:
-        print(e)
-
-
 if __name__ == "__main__":
-    try:
-        driver.get("www.facebook.com")
-    except Exception as e:
-        print(e)
+    """
+        enable signals in pycharm:
+        - CTRL + SHIFt + A
+        - registry
+        - kill.windows.processes.softly: true
+    """
+    print(f"MAIN        | atexit.register()")
+    atexit.register(util.selenium.quit_handler, driver, "atexit")
+    # signal.signal(signal.SIGTERM, quit_handler)
+    # signal.signal(signal.SIGINT, quit_handler)
 
-    time.sleep(2)
-    print("closing chromedriver...")
-    driver.quit()
-    print("quit")
+    try:
+        driver.get("https://www.facebook.com/")
+        time.sleep(2)
+    except KeyboardInterrupt as e:
+        print(f"MAIN        | KeyboardInterrupt: {e}")
+        # util.selenium.quit_handler(driver, KeyboardInterrupt)
+        # uses atexit
+    except Exception as e:
+        print(f"MAIN        | {e}")
+
