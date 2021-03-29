@@ -48,39 +48,44 @@ if __name__ == "__main__":
         facebook.dismiss_cookies()
         facebook.login()
         facebook.photos()
-
-        logger.info("search edit menus")
-        edits = driver.find_elements_by_css_selector("div[aria-haspopup=menu][aria-label=Modifica] i")
-        logger.info("print edit menus")
-        print(edits)
-        logger.info("search edit menus text")
-        for edit in edits:
-            print(edit.text)
-        logger.info("select first menu")
-        edit = edits[0]
-        logger.info("print edit menu")
-        print(edit.text)
-        logger.info("click first menu")
-        edit.click()
-        util.selenium.wait()
-        logger.info("search  menu items")
-        menu_items = driver.find_elements_by_css_selector("div[role=menuitem] span")
-        menu_delete = None
-        for menu_item in menu_items:
-            logger.info("print menu items")
-            print(menu_item.text)
-            if menu_item.text == "Elimina la foto":
-                menu_delete = menu_item
-
-        logger.info("click delete photo")
-        menu_delete.click()
-        util.selenium.wait()
-        delete_photo = driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
-        delete_photo.click()
-
         while True:
-            util.selenium.wait()
-        # util.selenium.quit_handler()
+            try:
+                logger.info("search edit menus")
+                edit_menus = driver.find_elements_by_css_selector("div[aria-haspopup=menu][aria-label=Modifica] i")
+                logger.info("print edit menus")
+                print(edit_menus)
+
+                logger.info("search edit menus text")
+                # for edit in edits:
+                #     print(edit.text)
+                logger.info("select first menu")
+                edit_menu = edit_menus[0]
+                logger.info("print edit menu")
+                print(edit_menu.text)
+                logger.info("click first menu")
+                edit_menu.click()
+                util.selenium.wait()
+
+                logger.info("search  menu items")
+                menu_items = driver.find_elements_by_css_selector("div[role=menuitem] span")
+                menu_delete = None
+                for menu_item in menu_items:
+                    logger.info("print menu items")
+                    print(menu_item.text)
+                    if menu_item.text == "Elimina la foto":
+                        menu_delete = menu_item
+
+                logger.info("click delete photo")
+                menu_delete.click()
+                util.selenium.wait()
+
+                delete_photo = driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
+                delete_photo.click()
+            except Exception as e:
+                logger.critical(e)
+                continue
+        # while True:
+        #     util.selenium.wait()
     except KeyboardInterrupt as e:
         logger.critical(f"MAIN        | KeyboardInterrupt: {e}")
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
