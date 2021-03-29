@@ -19,10 +19,11 @@ class Facebook:
 
     def photos(self):
         # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
-        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod/photos_all")
+        url = f""
+        util.selenium.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
 
     def profile(self):
-        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod")
+        util.selenium.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/")
 
     def dismiss_cookies(self):
         #

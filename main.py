@@ -66,8 +66,8 @@ if __name__ == "__main__":
             except Exception as e:
                 logger.critical(e)
                 continue
-        # while True:
-        #     util.selenium.wait()
+        while True:
+            util.selenium.wait()
     except KeyboardInterrupt as e:
         logger.critical(f"MAIN        | KeyboardInterrupt: {e}")
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
