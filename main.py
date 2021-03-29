@@ -48,18 +48,19 @@ if __name__ == "__main__":
         facebook.dismiss_cookies()
         facebook.login()
         facebook.photos()
-        while facebook.photos_getmenus():
+        more_photos = True
+        while more_photos:
             try:
                 edit_menus = facebook.photos_getmenus()
-
+                if len(edit_menus):
+                    more_photos = True
+                else:
+                    logger.info("NO MORE PHOTOS!")
+                    more_photos = False
                 facebook.photos_clickfirstmenu(edit_menus)
-
                 menu_items = facebook.photos_getmenuitems()
-
                 menu_delete = facebook.get_deletemenu(menu_items)
-
                 facebook.photos_clickdelete(menu_delete)
-
                 facebook.photos_confirmdelete()
 
             except Exception as e:
