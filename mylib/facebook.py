@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 import selenium.common.exceptions
 import logging
 import myob.facebook
+import util.selenium
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ def dismiss_cookies(driver: webdriver.Chrome):
             raise e
 
 
-def login_home(driver: webdriver.Chrome):
+def login(driver: webdriver.Chrome):
     #
     #   login
     #
@@ -53,29 +54,27 @@ def login_home(driver: webdriver.Chrome):
         logger.critical(e)
 
 
-def login_profile(driver: webdriver.Chrome):
-    #
-    #   login
-    #
-    # driver.find_element_by_css_selector("button[type=submit]").click()
-    try:
-        logger.info('find login email field"...')
-        email = driver.find_element_by_css_selector("input[type=email][name=email]")
-        logger.info("try to edit email field...")
-        email.send_keys(myob.facebook.EMAIL)
-        logger.info('SUCCESS | edit email field"')
+def photos(driver):
+    # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
+    util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos_all")
 
-        logger.info('find login password field"...')
-        password = driver.find_element_by_css_selector("input[type=password][name=pass]")
-        logger.info("try to edit password field...")
-        password.send_keys(myob.facebook.PASSWORD)
-        logger.info('SUCCESS | edit password field"')
 
-        logger.info('find login login button"...')
-        btnlogin = driver.find_element_by_css_selector("button[type=submit][name=login]")
-        logger.info("try to click login button")
-        btnlogin.click()
-        logger.info('SUCCESS | click login"')
+def profile(driver):
+    util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod")
 
-    except Exception as e:
-        logger.critical(e)
+
+def get_user():
+    return myob.facebook.USER
+
+
+def get_email():
+    return myob.facebook.EMAIL
+
+
+def get_password():
+    return myob.facebook.PASSWORD
+
+
+def get_profile():
+    return myob.facebook.PROFILE_URL
+
