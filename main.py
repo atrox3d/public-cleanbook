@@ -1,14 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 import time
 import atexit
-import util.system
-import util.selenium
-import util.logger
 import logging
 
-from mylib.facebook import Facebook
+import util.selenium
+import util.logger
+from util.facebook import Facebook
 
 
 #
@@ -52,6 +49,7 @@ if __name__ == "__main__":
         facebook.dismiss_cookies()
         facebook.login()
         facebook.photos()
+        util.selenium.quit_handler()
         while True:
             time.sleep(2)
     except KeyboardInterrupt as e:
