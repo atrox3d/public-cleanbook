@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 import time
 import atexit
 import util.system
@@ -28,7 +29,10 @@ util.logger.disable_loggers("urllib3", "selenium")
 #   setup driver
 #
 CHROME_DRIVER_PATH = "./chromedriver"  # .exe
-driver = webdriver.Chrome(CHROME_DRIVER_PATH)
+options = webdriver.ChromeOptions()
+options.add_argument('--disable-notifications')
+options.add_argument('--start-maximized')
+driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=options)
 if __name__ == "__main__":
     ############################################################################
     # enable signals in pycharm:
@@ -44,7 +48,8 @@ if __name__ == "__main__":
     try:
         driver.get("https://www.facebook.com/")
         facebook.dismiss_cookies(driver)
-        facebook.login(driver)
+        facebook.login_home(driver)
+        util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod")
         while True:
             time.sleep(2)
     except KeyboardInterrupt as e:
