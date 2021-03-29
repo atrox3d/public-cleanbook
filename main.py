@@ -5,8 +5,12 @@ import atexit
 import util.system
 import util.selenium
 import util.logger
+import logging
 
-rootlogger = util.logger.get_cli_logger()
+# rootlogger = util.logger.get_cli_logger(level="INFO")
+util.logger.setup_root_logger()
+logger = logging.getLogger(__name__)
+util.logger.disable_loggers("urllib3", "selenium")
 
 
 CHROME_DRIVER_PATH = "./chromedriver"  # .exe
@@ -20,7 +24,7 @@ if __name__ == "__main__":
         - registry
         - kill.windows.processes.softly: true
     """
-    print(f"MAIN        | atexit.register()")
+    logger.info(f"MAIN        | atexit.register()")
     atexit.register(util.selenium.quit_handler, driver, "atexit")
     # signal.signal(signal.SIGTERM, quit_handler)
     # signal.signal(signal.SIGINT, quit_handler)
@@ -29,9 +33,9 @@ if __name__ == "__main__":
         driver.get("https://www.facebook.com/")
         time.sleep(2)
     except KeyboardInterrupt as e:
-        print(f"MAIN        | KeyboardInterrupt: {e}")
+        logger.critical(f"MAIN        | KeyboardInterrupt: {e}")
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
         # uses atexit
     except Exception as e:
-        print(f"MAIN        | {e}")
+        logger.exception(f"MAIN        | {e}")
 
