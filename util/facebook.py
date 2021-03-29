@@ -8,7 +8,7 @@ import util.selenium
 logger = logging.getLogger(__name__)
 
 
-class Facebook():
+class Facebook:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
         self.facebook = myob.facebook
@@ -16,6 +16,13 @@ class Facebook():
     def home(self):
         # self.driver.get("https://www.facebook.com/")
         util.selenium.new_url(self.driver, "https://www.facebook.com/")
+
+    def photos(self):
+        # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
+        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod/photos_all")
+
+    def profile(self):
+        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod")
 
     def dismiss_cookies(self):
         #
@@ -62,12 +69,45 @@ class Facebook():
         except Exception as e:
             logger.critical(e)
 
-    def photos(self):
-        # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
-        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod/photos_all")
+    def photos_getmenus(self):
+        logger.info("search edit menus")
+        edit_menus = self.driver.find_elements_by_css_selector("div[aria-haspopup=menu][aria-label=Modifica] i")
+        # logger.info("print edit menus")
+        # print(edit_menus)
+        return edit_menus
 
-    def profile(self):
-        util.selenium.new_url(self.driver, "https://www.facebook.com/robb.nogod")
+    def photos_clickfirstmenu(self, edit_menus):
+        logger.info("select first menu")
+        edit_menu = edit_menus[0]
+        logger.info("print edit menu")
+        print(edit_menu.text)
+        logger.info("click first menu")
+        edit_menu.click()
+        util.selenium.wait()
+
+    def photos_getmenuitems(self):
+        logger.info("search  menu items")
+        menu_items = self.driver.find_elements_by_css_selector("div[role=menuitem] span")
+        return menu_items
+
+    def get_deletemenu(self, menu_items):
+        menu_delete = None
+        for menu_item in menu_items:
+            logger.info("print menu items")
+            print(menu_item.text)
+            if menu_item.text == "Elimina la foto":
+                menu_delete = menu_item
+        return menu_delete
+
+    def photos_clickdelete(self, menu_delete):
+        logger.info("click delete photo")
+        menu_delete.click()
+        util.selenium.wait()
+
+    def photos_confirmdelete(self):
+        delete_photo = self.driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
+        delete_photo.click()
+        util.selenium.wait(10)
 
     def get_user(self):
         return self.facebook.USER

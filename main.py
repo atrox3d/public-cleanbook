@@ -48,39 +48,20 @@ if __name__ == "__main__":
         facebook.dismiss_cookies()
         facebook.login()
         facebook.photos()
-        while True:
+        while facebook.photos_getmenus():
             try:
-                logger.info("search edit menus")
-                edit_menus = driver.find_elements_by_css_selector("div[aria-haspopup=menu][aria-label=Modifica] i")
-                logger.info("print edit menus")
-                print(edit_menus)
+                edit_menus = facebook.photos_getmenus()
 
-                logger.info("search edit menus text")
-                # for edit in edits:
-                #     print(edit.text)
-                logger.info("select first menu")
-                edit_menu = edit_menus[0]
-                logger.info("print edit menu")
-                print(edit_menu.text)
-                logger.info("click first menu")
-                edit_menu.click()
-                util.selenium.wait()
+                facebook.photos_clickfirstmenu(edit_menus)
 
-                logger.info("search  menu items")
-                menu_items = driver.find_elements_by_css_selector("div[role=menuitem] span")
-                menu_delete = None
-                for menu_item in menu_items:
-                    logger.info("print menu items")
-                    print(menu_item.text)
-                    if menu_item.text == "Elimina la foto":
-                        menu_delete = menu_item
+                menu_items = facebook.photos_getmenuitems()
 
-                logger.info("click delete photo")
-                menu_delete.click()
-                util.selenium.wait()
+                menu_delete = facebook.get_deletemenu(menu_items)
 
-                delete_photo = driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
-                delete_photo.click()
+                facebook.photos_clickdelete(menu_delete)
+
+                facebook.photos_confirmdelete()
+
             except Exception as e:
                 logger.critical(e)
                 continue
