@@ -4,15 +4,14 @@ import atexit
 import logging
 
 import util.selenium
-import util.logger
+from util.loghelper import LogHelper
 from util.facebook import Facebook
 
 #
 #   root logger
 #
-# rootlogger = util.logger.get_cli_logger(level="INFO")
 # using basic config
-util.logger.setup_root_logger()
+LogHelper.get_root_logger()
 #
 #   module logger
 #
@@ -20,7 +19,7 @@ logger = logging.getLogger(__name__)
 #
 #   disable thirdparty loggers
 #
-util.logger.disable_loggers("urllib3", "selenium")
+LogHelper.disable_loggers("urllib3", "selenium")
 #
 #   setup driver
 #
