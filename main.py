@@ -3,7 +3,7 @@ import time
 import atexit
 import logging
 
-import util.seleniumhelper
+from util.seleniumhelper import SeleniumHelper
 from util.loghelper import LogHelper
 from util.facebook import Facebook
 
@@ -29,6 +29,8 @@ options.add_argument('--disable-notifications')
 options.add_argument('--start-maximized')
 driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=options)
 
+seleniumhelper = SeleniumHelper(driver)
+
 if __name__ == "__main__":
     ############################################################################
     # enable signals in pycharm:
@@ -37,7 +39,7 @@ if __name__ == "__main__":
     # - kill.windows.processes.softly: true
     ############################################################################
     logger.info(f"MAIN        | atexit.register()")
-    atexit.register(util.seleniumhelper.quit_handler, driver, "atexit")
+    atexit.register(seleniumhelper.quit_handler, "atexit")
     # signal.signal(signal.SIGTERM, quit_handler)
     # signal.signal(signal.SIGINT, quit_handler)
 
@@ -66,7 +68,7 @@ if __name__ == "__main__":
                 logger.critical(e)
                 continue
         while True:
-            util.seleniumhelper.wait()
+            seleniumhelper.wait()
     except KeyboardInterrupt as e:
         logger.critical(f"MAIN        | KeyboardInterrupt: {e}")
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
