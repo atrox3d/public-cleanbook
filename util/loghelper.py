@@ -86,7 +86,7 @@ class LogHelper:
 
     @staticmethod
     def list_loggers(condition_name=None, condition_value=None):
-        loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict[:]]
+        loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict]
         if condition_name:
             loggers = [_logger for _logger in loggers if getattr(_logger, condition_name) == condition_value]
         # print(loggers)
