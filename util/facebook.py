@@ -1,29 +1,31 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import selenium.common.exceptions
+from selenium.webdriver.remote.webdriver import WebDriver
 import logging
 import myob.facebook
-import util.seleniumhelper
+from util.seleniumhelper import SeleniumHelper
 
 logger = logging.getLogger(__name__)
 
 
 class Facebook:
-    def __init__(self, driver: webdriver.Chrome):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
         self.facebook = myob.facebook
+        self.seleniumhelper = SeleniumHelper(driver)
 
     def home(self):
         # self.driver.get("https://www.facebook.com/")
-        util.seleniumhelper.new_url(self.driver, "https://www.facebook.com/")
+        self.seleniumhelper.new_url("https://www.facebook.com/")
 
     def photos(self):
         # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
         url = f""
-        util.seleniumhelper.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
+        self.seleniumhelper.new_url(f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
 
     def profile(self):
-        util.seleniumhelper.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/")
+        self.seleniumhelper.new_url(f"https://www.facebook.com/{myob.facebook.USER}/")
 
     def dismiss_cookies(self):
         #
@@ -66,7 +68,7 @@ class Facebook:
             btnlogin.click()
             logger.info('SUCCESS | click login"')
 
-            util.seleniumhelper.wait()
+            self.seleniumhelper.wait()
         except Exception as e:
             logger.critical(e)
 
@@ -84,7 +86,7 @@ class Facebook:
         print(edit_menu.text)
         logger.info("click first menu")
         edit_menu.click()
-        util.seleniumhelper.wait()
+        self.seleniumhelper.wait()
 
     def photos_getmenuitems(self):
         logger.info("search  menu items")
@@ -103,12 +105,12 @@ class Facebook:
     def photos_clickdelete(self, menu_delete):
         logger.info("click delete photo")
         menu_delete.click()
-        util.seleniumhelper.wait()
+        self.seleniumhelper.wait()
 
     def photos_confirmdelete(self):
         delete_photo = self.driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
         delete_photo.click()
-        util.seleniumhelper.wait(10)
+        self.seleniumhelper.wait(10)
 
     def get_user(self):
         return self.facebook.USER
