@@ -3,7 +3,7 @@ from selenium.webdriver.common.keys import Keys
 import selenium.common.exceptions
 import logging
 import myob.facebook
-import util.selenium
+import util.seleniumhelper
 
 logger = logging.getLogger(__name__)
 
@@ -15,15 +15,15 @@ class Facebook:
 
     def home(self):
         # self.driver.get("https://www.facebook.com/")
-        util.selenium.new_url(self.driver, "https://www.facebook.com/")
+        util.seleniumhelper.new_url(self.driver, "https://www.facebook.com/")
 
     def photos(self):
         # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
         url = f""
-        util.selenium.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
+        util.seleniumhelper.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
 
     def profile(self):
-        util.selenium.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/")
+        util.seleniumhelper.new_url(self.driver, f"https://www.facebook.com/{myob.facebook.USER}/")
 
     def dismiss_cookies(self):
         #
@@ -66,7 +66,7 @@ class Facebook:
             btnlogin.click()
             logger.info('SUCCESS | click login"')
 
-            util.selenium.wait()
+            util.seleniumhelper.wait()
         except Exception as e:
             logger.critical(e)
 
@@ -84,7 +84,7 @@ class Facebook:
         print(edit_menu.text)
         logger.info("click first menu")
         edit_menu.click()
-        util.selenium.wait()
+        util.seleniumhelper.wait()
 
     def photos_getmenuitems(self):
         logger.info("search  menu items")
@@ -103,12 +103,12 @@ class Facebook:
     def photos_clickdelete(self, menu_delete):
         logger.info("click delete photo")
         menu_delete.click()
-        util.selenium.wait()
+        util.seleniumhelper.wait()
 
     def photos_confirmdelete(self):
         delete_photo = self.driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
         delete_photo.click()
-        util.selenium.wait(10)
+        util.seleniumhelper.wait(10)
 
     def get_user(self):
         return self.facebook.USER

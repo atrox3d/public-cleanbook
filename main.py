@@ -3,7 +3,7 @@ import time
 import atexit
 import logging
 
-import util.selenium
+import util.seleniumhelper
 from util.loghelper import LogHelper
 from util.facebook import Facebook
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # - kill.windows.processes.softly: true
     ############################################################################
     logger.info(f"MAIN        | atexit.register()")
-    atexit.register(util.selenium.quit_handler, driver, "atexit")
+    atexit.register(util.seleniumhelper.quit_handler, driver, "atexit")
     # signal.signal(signal.SIGTERM, quit_handler)
     # signal.signal(signal.SIGINT, quit_handler)
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
                 logger.critical(e)
                 continue
         while True:
-            util.selenium.wait()
+            util.seleniumhelper.wait()
     except KeyboardInterrupt as e:
         logger.critical(f"MAIN        | KeyboardInterrupt: {e}")
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
