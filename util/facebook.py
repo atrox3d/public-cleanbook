@@ -3,29 +3,41 @@ from selenium.webdriver.common.keys import Keys
 import selenium.common.exceptions
 from selenium.webdriver.remote.webdriver import WebDriver
 import logging
-import myob.facebook
 from util.seleniumhelper import SeleniumHelper
 
 logger = logging.getLogger(__name__)
 
 
 class Facebook:
-    def __init__(self, driver: WebDriver):
-        self.driver = driver
-        self.facebook = myob.facebook
-        self.seleniumhelper = SeleniumHelper(driver)
+    def __init__(
+            self,
+            seleniumhelper,
+            email,
+            password,
+            username,
+            # profileurl,
+            facebook_home="https://www.facebook.com"
+    ):
+        self.selenium = seleniumhelper
+        self.driver = seleniumhelper.get_driver()
+        self.email = email
+        self.password = password
+        self.username = username
+        self.facebook_home = facebook_home.rstrip("/")
 
     def home(self):
-        # self.driver.get("https://www.facebook.com/")
-        self.seleniumhelper.new_url("https://www.facebook.com/")
-
-    def photos(self):
-        # util.selenium.new_url(driver, "https://www.facebook.com/robb.nogod/photos")
-        url = f""
-        self.seleniumhelper.new_url(f"https://www.facebook.com/{myob.facebook.USER}/photos_all")
+        logger.debug(f"opening home: {self.facebook_home}")
+        self.selenium.new_url(self.facebook_home)
 
     def profile(self):
-        self.seleniumhelper.new_url(f"https://www.facebook.com/{myob.facebook.USER}/")
+        url = f"{self.facebook_home}/{self.username}/"
+        logger.debug(f"opening profile: {url}")
+        self.selenium.new_url(url)
+
+    def photos(self):
+        url = f"{self.facebook_home}/{self.username}/photos_all"
+        logger.debug(f"opening photos: {url}")
+        self.selenium.new_url(url)
 
     def dismiss_cookies(self):
         #
@@ -53,13 +65,13 @@ class Facebook:
             logger.info('find login email field"...')
             email = self.driver.find_element_by_css_selector("input[type=text][name=email][id=email]")
             logger.info("try to edit email field...")
-            email.send_keys(myob.facebook.EMAIL)
+            email.send_keys(self.email)
             logger.info('SUCCESS | edit email field"')
 
             logger.info('find login password field"...')
             password = self.driver.find_element_by_css_selector("input[type=password][name=pass][id=pass]")
             logger.info("try to edit password field...")
-            password.send_keys(myob.facebook.PASSWORD)
+            password.send_keys(self.password)
             logger.info('SUCCESS | edit password field"')
 
             logger.info('find login login button"...')
@@ -68,7 +80,7 @@ class Facebook:
             btnlogin.click()
             logger.info('SUCCESS | click login"')
 
-            self.seleniumhelper.wait()
+            # self.selenium.wait()
         except Exception as e:
             logger.critical(e)
 
@@ -86,7 +98,7 @@ class Facebook:
         print(edit_menu.text)
         logger.info("click first menu")
         edit_menu.click()
-        self.seleniumhelper.wait()
+        self.selenium.wait()
 
     def photos_getmenuitems(self):
         logger.info("search  menu items")
@@ -105,21 +117,10 @@ class Facebook:
     def photos_clickdelete(self, menu_delete):
         logger.info("click delete photo")
         menu_delete.click()
-        self.seleniumhelper.wait()
+        self.selenium.wait()
 
     def photos_confirmdelete(self):
         delete_photo = self.driver.find_element_by_css_selector("div[aria-label=Elimina] div span")
         delete_photo.click()
-        self.seleniumhelper.wait(10)
+        self.selenium.wait(10)
 
-    def get_user(self):
-        return self.facebook.USER
-
-    def get_email(self):
-        return self.facebook.EMAIL
-
-    def get_password(self):
-        return self.facebook.PASSWORD
-
-    def get_profile(self):
-        return self.facebook.PROFILE_URL

@@ -6,6 +6,7 @@ import logging
 from util.seleniumhelper import SeleniumHelper
 from util.loghelper import LogHelper
 from util.facebook import Facebook
+import myob.facebook
 
 if __name__ == "__main__":
     #
@@ -25,14 +26,19 @@ if __name__ == "__main__":
     #   setup driver
     #
     seleniumhelper = SeleniumHelper()
-    exit()
-
     try:
-        facebook = Facebook(driver)
+        facebook = Facebook(
+            seleniumhelper,
+            myob.facebook.EMAIL,
+            myob.facebook.PASSWORD,
+            myob.facebook.USER,
+        )
         facebook.home()
         facebook.dismiss_cookies()
         facebook.login()
         facebook.photos()
+        time.sleep(60)
+        exit()
         more_photos = True
         while more_photos:
             try:
