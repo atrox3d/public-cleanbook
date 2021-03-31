@@ -32,6 +32,7 @@ if __name__ == "__main__":
             myob.facebook.EMAIL,
             myob.facebook.PASSWORD,
             myob.facebook.USER,
+            # "https://mbasic.facebook.com"
         )
         facebook.home()
         facebook.dismiss_cookies()
