@@ -7,41 +7,25 @@ from util.seleniumhelper import SeleniumHelper
 from util.loghelper import LogHelper
 from util.facebook import Facebook
 
-#
-#   root logger
-#
-# using basic config
-LogHelper.get_root_logger()
-#
-#   module logger
-#
-logger = logging.getLogger(__name__)
-#
-#   disable thirdparty loggers
-#
-LogHelper.disable_loggers("urllib3", "selenium")
-#
-#   setup driver
-#
-CHROME_DRIVER_PATH = "./chromedriver"  # .exe
-options = webdriver.ChromeOptions()
-options.add_argument('--disable-notifications')
-options.add_argument('--start-maximized')
-driver = webdriver.Chrome(CHROME_DRIVER_PATH, options=options)
-
-seleniumhelper = SeleniumHelper(driver)
-
 if __name__ == "__main__":
-    ############################################################################
-    # enable signals in pycharm:
-    # - CTRL + SHIFt + A
-    # - registry
-    # - kill.windows.processes.softly: true
-    ############################################################################
-    logger.info(f"MAIN        | atexit.register()")
-    atexit.register(seleniumhelper.quit_handler, "atexit")
-    # signal.signal(signal.SIGTERM, quit_handler)
-    # signal.signal(signal.SIGINT, quit_handler)
+    #
+    #   root logger
+    #
+    # using basic config
+    rootlogger = LogHelper.get_root_logger()
+    #
+    #   module logger
+    #
+    logger = logging.getLogger(__name__)
+    #
+    #   disable thirdparty loggers
+    #
+    LogHelper.disable_loggers("urllib3", "selenium")
+    #
+    #   setup driver
+    #
+    seleniumhelper = SeleniumHelper()
+    exit()
 
     try:
         facebook = Facebook(driver)
