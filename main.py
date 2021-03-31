@@ -1,5 +1,6 @@
 import time
 import logging
+import sys
 
 from util.seleniumhelper import SeleniumHelper
 from util.loghelper import LogHelper
@@ -31,7 +32,7 @@ if __name__ == "__main__":
             myob.facebook.EMAIL,
             myob.facebook.PASSWORD,
             myob.facebook.USER,
-            "https://mbasic.facebook.com"
+            "https://m.facebook.com"
         )
         facebook.home()
         facebook.dismiss_cookies()
@@ -64,4 +65,5 @@ if __name__ == "__main__":
         # util.selenium.quit_handler(driver, KeyboardInterrupt)
         # uses atexit
     except Exception as e:
-        logger.critical(f"MAIN        | {e}")
+        logger.critical(f"MAIN        | Exception: {e}")
+        logger.critical(f"MAIN        | Exception: {sys.exc_info()}")

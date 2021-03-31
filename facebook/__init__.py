@@ -38,4 +38,4 @@ class FacebookFactory:
                 facebook_home
             )
         else:
-            raise NotImplementedError
+            raise NotImplementedError(f"the class for {facebook_home} is not yet implemented")
