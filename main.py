@@ -32,14 +32,15 @@ if __name__ == "__main__":
             myob.facebook.EMAIL,
             myob.facebook.PASSWORD,
             myob.facebook.USER,
-            "https://m.facebook.com"
+            # "https://www.facebook.com"
+            "https://mbasic.facebook.com"
         )
         facebook.home()
         facebook.dismiss_cookies()
         facebook.login()
-        facebook.photos()
-        time.sleep(60)
+        input("press a key to quit")
         exit()
+        facebook.photos()
         more_photos = True
         while more_photos:
             try:

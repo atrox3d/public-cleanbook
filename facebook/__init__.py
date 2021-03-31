@@ -17,7 +17,6 @@ class FacebookFactory:
     ):
         if facebook_home.rstrip("/").endswith("www.facebook.com"):
             logger.debug("creating Facebook instance")
-            exit()
             return Facebook(
                 seleniumhelper,
                 email,
@@ -28,7 +27,6 @@ class FacebookFactory:
             )
         elif facebook_home.rstrip("/").endswith("mbasic.facebook.com"):
             logger.debug("creating MbasicFacebook instance")
-            exit()
             return MbasicFacebook(
                 seleniumhelper,
                 email,

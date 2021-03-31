@@ -44,7 +44,8 @@ class MbasicFacebook:
         #   cookies
         #
         logger.info('find button "Accept All"...')
-        btns_acceptall = self.driver.find_elements_by_xpath("//*[contains(text(), 'Accept All')]")
+        # btns_acceptall = self.driver.find_elements_by_xpath("//*[contains(text(), 'Accept All')]")
+        btns_acceptall = self.driver.find_elements_by_css_selector("button[type=submit]")
         for btn in btns_acceptall:
             try:
                 logger.info('try to click "Accept All"')
@@ -63,22 +64,38 @@ class MbasicFacebook:
         # driver.find_element_by_css_selector("button[type=submit]").click()
         try:
             logger.info('find login email field"...')
-            email = self.driver.find_element_by_css_selector("input[type=text][name=email][id=email]")
+            email = self.driver.find_element_by_css_selector("input[type=text][name=email]")
             logger.info("try to edit email field...")
             email.send_keys(self.email)
             logger.info('SUCCESS | edit email field"')
 
             logger.info('find login password field"...')
-            password = self.driver.find_element_by_css_selector("input[type=password][name=pass][id=pass]")
+            password = self.driver.find_element_by_css_selector("input[type=password][name=pass]")
             logger.info("try to edit password field...")
             password.send_keys(self.password)
             logger.info('SUCCESS | edit password field"')
 
             logger.info('find login login button"...')
-            btnlogin = self.driver.find_element_by_css_selector("button[type=submit][name=login]")
+            btnlogin = self.driver.find_element_by_css_selector("input[type=submit][name=login]")
             logger.info("try to click login button")
             btnlogin.click()
             logger.info('SUCCESS | click login"')
+
+            self.onetouch_login()
+            # self.selenium.wait()
+        except Exception as e:
+            logger.critical(e)
+
+    def onetouch_login(self):
+        #
+        #   login
+        #
+        # driver.find_element_by_css_selector("button[type=submit]").click()
+        try:
+            logger.info('find not now"...')
+            notnow = self.driver.find_element_by_css_selector("div a[href*=regular_login]")
+            notnow.click()
+            logger.info('SUCCESS | notnow one touch login"')
 
             # self.selenium.wait()
         except Exception as e:
