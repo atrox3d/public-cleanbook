@@ -1,11 +1,10 @@
-from selenium import webdriver
 import time
-import atexit
 import logging
 
 from util.seleniumhelper import SeleniumHelper
 from util.loghelper import LogHelper
-from util.facebook import Facebook
+# from facebook.facebook import Facebook
+from facebook import FacebookFactory
 import myob.facebook
 
 if __name__ == "__main__":
@@ -27,12 +26,12 @@ if __name__ == "__main__":
     #
     seleniumhelper = SeleniumHelper()
     try:
-        facebook = Facebook(
+        facebook = FacebookFactory.get_facebook(
             seleniumhelper,
             myob.facebook.EMAIL,
             myob.facebook.PASSWORD,
             myob.facebook.USER,
-            # "https://mbasic.facebook.com"
+            "https://mbasic.facebook.com"
         )
         facebook.home()
         facebook.dismiss_cookies()
