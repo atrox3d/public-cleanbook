@@ -1,7 +1,4 @@
-import os
 import subprocess
-import atexit
-import signal
 import logging
 
 logger = logging.getLogger(__name__)

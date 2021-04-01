@@ -1,8 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import selenium.common.exceptions
-from selenium.webdriver.remote.webdriver import WebDriver
-from util.seleniumhelper import SeleniumHelper
 
 import logging
 logger = logging.getLogger(__name__)
