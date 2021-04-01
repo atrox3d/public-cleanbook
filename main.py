@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #
     #   setup driver
     #
-    seleniumhelper = SeleniumHelper()
+    seleniumhelper = SeleniumHelper(mock_driver=True)
     try:
         facebook = FacebookFactory.get_facebook(
             seleniumhelper,

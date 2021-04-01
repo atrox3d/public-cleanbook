@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 #       A serious error, indicating that the program itself may be unable to continue running.
 ##################################################################################################################
 class LogHelper:
-    FORMAT_STRING = '%(asctime)s | %(levelname)-8s | %(name)-20s | %(funcName)20s() | %(message)s'
+    FORMAT_STRING = '%(asctime)s | %(levelname)-8s | %(name)-25s | %(funcName)20s() | %(message)s'
     ROOTLOGGER = None
 
     def __init__(self):
