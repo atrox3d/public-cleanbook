@@ -7,16 +7,20 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-CHROME_DRIVER_PATH = "./chromedriver"  # .exe
+if __name__ == '__main__':
+    CHROME_DRIVER_PATH = "../../chromedriver"  # .exe
+else:
+    CHROME_DRIVER_PATH = "./chromedriver"  # .exe
+
 IMPLICIT_WAIT = 10
 
 
-class SeleniumDriver:
+class DriverHelper:
     def __init__(
             self,
             driver_path=CHROME_DRIVER_PATH,
             implicit_wait=IMPLICIT_WAIT,
-            chrome_options=DefaultChromeOptions(),
+            chrome_options=DefaultChromeOptions().get_options(),
             kill_onexit=True,
             mock_driver=False
     ):
@@ -26,12 +30,13 @@ class SeleniumDriver:
         self.mock_driver = mock_driver
         self.kill_onexit = kill_onexit
 
-        logger.debug(f"kill_driver is {'enabled' if kill_onexit else 'disabled'}")
-        if kill_onexit:
-            self.on_quit(self.kill_chromedriver, self.driver, "on_quit")
-
         self.driver = None
         self.init_driver()
+
+        logger.debug(f"kill_driver is {'enabled' if kill_onexit else 'disabled'}")
+        if kill_onexit:
+            self.on_quit(self.kill_chromedriver, "on_quit")
+
 
     def init_driver(self):
         if self.mock_driver:
@@ -69,3 +74,6 @@ class SeleniumDriver:
         atexit.register(handler, *args)
         # signal.signal(signal.SIGTERM, quit_handler)
         # signal.signal(signal.SIGINT, quit_handler)
+
+    def get_driver(self):
+        return self.driver

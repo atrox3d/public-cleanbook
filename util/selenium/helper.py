@@ -1,18 +1,14 @@
+from util.selenium.driver import DriverHelper
+from util.selenium.mockdriver import MockWebDriver
+from util.selenium.options import DefaultChromeOptions
 import time
 import logging
 logger = logging.getLogger(__name__)
 
 
 class SeleniumHelper:
-    def __init__(
-            self,
-            disable_notifications=True,
-            start_maximized=True,
-            *options,
-    ):
-        logger.debug(f"setting implicit_wait to: {implicit_wait}")
-        self.options = self.configure_options(disable_notifications, start_maximized, *options)
-        self.driver = self.init_driver(CHROME_DRIVER_PATH, implicit_wait, self.options, self.mock_driver)
+    def __init__(self, driver_helper: DriverHelper):
+        self.driver = driver_helper.get_driver()
 
     def get_driver(self):
         return self.driver
@@ -39,4 +35,5 @@ class SeleniumHelper:
 
 
 if __name__ == '__main__':
-    se = SeleniumHelper(mock_driver=True)
+    driver_helper = DriverHelper()
+    se = SeleniumHelper(driver_helper)

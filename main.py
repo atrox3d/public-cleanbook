@@ -2,6 +2,7 @@ import logging
 import sys
 
 from util.selenium.helper import SeleniumHelper
+from util.selenium.driver import DriverHelper
 from util.logging.loghelper import LogHelper
 from facebook import FacebookFactory
 from facebook.credentials import FacebookCredentials
@@ -22,7 +23,8 @@ LogHelper.disable_loggers("urllib3", "selenium")
 #
 #   setup driver
 #
-seleniumhelper = SeleniumHelper(mock_driver=True)
+driverhelper = DriverHelper(mock_driver=False)
+seleniumhelper = SeleniumHelper(driverhelper)
 credentials = FacebookCredentials.from_jsonfile("myob/facebook.json")
 try:
     facebook = FacebookFactory.get_facebook(seleniumhelper, **credentials, facebook_home="https://mbasic.facebook.com")
