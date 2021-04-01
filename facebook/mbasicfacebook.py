@@ -52,6 +52,7 @@ class MbasicFacebook:
             except Exception as e:
                 logger.critical(e)
                 raise e
+        self.selenium.wait()
 
     def login(self):
         #
@@ -76,7 +77,7 @@ class MbasicFacebook:
             logger.info("try to click login button")
             btnlogin.click()
             logger.info('SUCCESS | click login"')
-
+            self.selenium.wait()
             self.onetouch_login()
             # self.selenium.wait()
         except Exception as e:
@@ -96,6 +97,7 @@ class MbasicFacebook:
             # self.selenium.wait()
         except Exception as e:
             logger.critical(e)
+        self.selenium.wait()
 
     def photos_getmenus(self):
         logger.info("search edit menus")

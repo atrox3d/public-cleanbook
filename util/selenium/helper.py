@@ -1,24 +1,32 @@
 from util.selenium.driver import DriverHelper
 from util.selenium.mockdriver import MockWebDriver
 from util.selenium.options import DefaultChromeOptions
+from selenium.webdriver.support.ui import WebDriverWait
 import time
 import logging
+import random
 logger = logging.getLogger(__name__)
 
 
 class SeleniumHelper:
     def __init__(self, driver_helper: DriverHelper):
+        self.driverhelper = driver_helper
+        self.implicit_wait = driver_helper.implicit_wait
         self.driver = driver_helper.get_driver()
 
     def get_driver(self):
         return self.driver
 
-    def wait(self, timeout=None):
-        return
-        if timeout is None:
-            timeout = self.implicit_wait
-        logger.info(f"waiting {timeout} seconds...")
-        time.sleep(timeout)
+    def wait(self, max_timeout=None):
+        if max_timeout is None:
+            max_timeout = self.implicit_wait
+
+        # logger.info(f"WebDriverWait waiting {timeout} seconds...")
+        # WebDriverWait(self.driver, timeout)
+        random_timeout = random.randint(1, max_timeout)
+        for _ in range(random_timeout, 0, -1):
+            logger.info(f"sleeping {_} seconds...")
+            time.sleep(1)
 
     def new_url(self, url):
         # logger.info("sending CTRL+T")
