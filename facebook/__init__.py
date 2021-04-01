@@ -1,5 +1,6 @@
 from .facebook import Facebook
 from .mbasicfacebook import MbasicFacebook
+from .mfacebook import MobileFacebook
 
 import logging
 logger = logging.getLogger(__name__)
@@ -12,7 +13,6 @@ class FacebookFactory:
             email,
             password,
             username,
-            # profileurl,
             facebook_home="https://www.facebook.com"
     ):
         if facebook_home.rstrip("/").endswith("www.facebook.com"):
@@ -22,7 +22,6 @@ class FacebookFactory:
                 email,
                 password,
                 username,
-                # profileurl,
                 facebook_home
             )
         elif facebook_home.rstrip("/").endswith("mbasic.facebook.com"):
@@ -32,7 +31,15 @@ class FacebookFactory:
                 email,
                 password,
                 username,
-                # profileurl,
+                facebook_home
+            )
+        elif facebook_home.rstrip("/").endswith("m.facebook.com"):
+            logger.debug("creating MbasicFacebook instance")
+            return MobileFacebook(
+                seleniumhelper,
+                email,
+                password,
+                username,
                 facebook_home
             )
         else:

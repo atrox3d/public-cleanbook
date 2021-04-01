@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class MbasicFacebook:
+class MobileFacebook:
     def __init__(
             self,
             seleniumhelper,
@@ -16,7 +16,7 @@ class MbasicFacebook:
             password,
             username,
             # profileurl,
-            facebook_home="https://mbasic.facebook.com"
+            facebook_home="https://m.facebook.com"
     ):
         self.selenium = seleniumhelper
         self.driver = seleniumhelper.get_driver()
