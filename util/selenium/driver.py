@@ -7,9 +7,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-if __name__ == '__main__':
-    CHROME_DRIVER_PATH = "../../chromedriver"  # .exe
-else:
+try:
+    if __name__ == '__main__':
+        CHROME_DRIVER_PATH = "../../chromedriver"  # .exe
+    else:
+        CHROME_DRIVER_PATH = "../chromedriver"  # .exe
+except:
     CHROME_DRIVER_PATH = "./chromedriver"  # .exe
 
 IMPLICIT_WAIT = 10

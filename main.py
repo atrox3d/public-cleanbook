@@ -1,6 +1,9 @@
 import logging
 import sys
 
+# from facebook.facebookbase import FacebookBase
+# exit()
+
 from util.selenium.helper import SeleniumHelper
 from util.selenium.driver import DriverHelper
 from util.logging.loghelper import LogHelper

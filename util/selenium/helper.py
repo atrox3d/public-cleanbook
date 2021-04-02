@@ -7,6 +7,7 @@ import logging
 import random
 logger = logging.getLogger(__name__)
 
+MAX_TIMEOUT = 10
 
 class SeleniumHelper:
     def __init__(self, driver_helper: DriverHelper):
@@ -17,12 +18,10 @@ class SeleniumHelper:
     def get_driver(self):
         return self.driver
 
-    def wait(self, max_timeout=None):
-        if max_timeout is None:
-            max_timeout = self.implicit_wait
+    def wait(self, max_timeout=MAX_TIMEOUT):
+        # if max_timeout is None:
+        #     max_timeout = self.implicit_wait
 
-        # logger.info(f"WebDriverWait waiting {timeout} seconds...")
-        # WebDriverWait(self.driver, timeout)
         random_timeout = random.randint(1, max_timeout)
         for _ in range(random_timeout, 0, -1):
             logger.info(f"sleeping {_} seconds...")
