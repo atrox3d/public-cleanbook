@@ -61,29 +61,30 @@ class FacebookBase:
                 raise e
 
     def login(self):
-        try:
-            logger.info('find login email field"...')
-            email = self.driver.find_element_by_css_selector("input[type=text][name=email]")
-            logger.info("try to edit email field...")
-            email.send_keys(self.credentials.email)
-            logger.info('SUCCESS | edit email field"')
-
-            logger.info('find login password field"...')
-            password = self.driver.find_element_by_css_selector("input[type=password][name=pass]")
-            logger.info("try to edit password field...")
-            password.send_keys(self.credentials.password)
-            logger.info('SUCCESS | edit password field"')
-
-            logger.info('find login login button"...')
-            btnlogin = self.driver.find_element_by_css_selector("button[type=submit][name=login]")
-            logger.info("try to click login button")
-            btnlogin.click()
-            logger.info('SUCCESS | click login"')
-
-            # self.selenium.wait()
-        except Exception as e:
-            logger.critical(e)
-            raise e
+        # try:
+        #     logger.info('find login email field"...')
+        #     email = self.driver.find_element_by_css_selector("input[type=text][name=email]")
+        #     logger.info("try to edit email field...")
+        #     email.send_keys(self.credentials.email)
+        #     logger.info('SUCCESS | edit email field"')
+        #
+        #     logger.info('find login password field"...')
+        #     password = self.driver.find_element_by_css_selector("input[type=password][name=pass]")
+        #     logger.info("try to edit password field...")
+        #     password.send_keys(self.credentials.password)
+        #     logger.info('SUCCESS | edit password field"')
+        #
+        #     logger.info('find login login button"...')
+        #     btnlogin = self.driver.find_element_by_css_selector("button[type=submit][name=login]")
+        #     logger.info("try to click login button")
+        #     btnlogin.click()
+        #     logger.info('SUCCESS | click login"')
+        #
+        #     # self.selenium.wait()
+        # except Exception as e:
+        #     logger.critical(e)
+        #     raise e
+        logger.info(f"base method")
 
     def photos_getmenus(self):
         logger.info("search edit menus")
@@ -136,8 +137,8 @@ if __name__ == '__main__':
     fb = FacebookBase(credentials, se)
     fb.home()
     fb.dismiss_cookies()
-    input("press enter...")
     fb.login()  # no
+    input("press enter...")
     fb.profile()
     fb.photos()
     exit()
