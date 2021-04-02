@@ -20,7 +20,9 @@ class FacebookBase:
             self,
             credentials: FacebookCredentials,
             seleniumhelper: SeleniumHelper,
-            facebook_home="https://www.facebook.com"
+            # facebook_home="https://www.facebook.com"
+            facebook_home="https://m.facebook.com"
+            # facebook_home="https://mbasic.facebook.com"
     ):
         self.credentials = credentials
         self.selenium = seleniumhelper
@@ -61,13 +63,13 @@ class FacebookBase:
     def login(self):
         try:
             logger.info('find login email field"...')
-            email = self.driver.find_element_by_css_selector("input[type=text][name=email][id=email]")
+            email = self.driver.find_element_by_css_selector("input[type=text][name=email]")
             logger.info("try to edit email field...")
             email.send_keys(self.credentials.email)
             logger.info('SUCCESS | edit email field"')
 
             logger.info('find login password field"...')
-            password = self.driver.find_element_by_css_selector("input[type=password][name=pass][id=pass]")
+            password = self.driver.find_element_by_css_selector("input[type=password][name=pass]")
             logger.info("try to edit password field...")
             password.send_keys(self.credentials.password)
             logger.info('SUCCESS | edit password field"')
@@ -81,6 +83,7 @@ class FacebookBase:
             # self.selenium.wait()
         except Exception as e:
             logger.critical(e)
+            raise e
 
     def photos_getmenus(self):
         logger.info("search edit menus")
@@ -126,12 +129,15 @@ if __name__ == '__main__':
     LogHelper.get_root_logger().setLevel(logging.INFO)
     credentials = FacebookCredentials.from_jsonfile("../myob/facebook.json")
     print(credentials)
-    co = DefaultChromeOptions()
-    de = DriverHelper(chrome_options=co.get_options())
+    co = DefaultChromeOptions().get_options()
+    de = DriverHelper(chrome_options=co)
     # de = MockWebDriver()
     se = SeleniumHelper(de)
     fb = FacebookBase(credentials, se)
     fb.home()
     fb.dismiss_cookies()
-    # fb.login()
+    input("press enter...")
+    fb.login()  # no
+    fb.profile()
+    fb.photos()
     exit()
